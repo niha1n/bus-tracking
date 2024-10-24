@@ -1,8 +1,6 @@
 import React from 'react';
 import LeftSidebar from '../components/Sidebar';
-import BusMap from '../components/BusMap';
 import BusSidebar from '../components/CardsContainer';
-import TopBar from '../components/TopBar';
 
 function LiveTracking() {
   return (

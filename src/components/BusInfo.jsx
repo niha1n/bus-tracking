@@ -1,6 +1,6 @@
 import React from 'react';
 
-function BusInfo(bus) {
+function BusInfo() {
   return (
     
       <div className="w-[40vw] fixed z-10  bg-white rounded-xl h-[14vh] right-[40vh] top-[12vh] shadow-md flex items-center justify-between p-4">

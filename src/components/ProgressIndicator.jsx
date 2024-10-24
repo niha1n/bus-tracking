@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaCross, FaPlus, FaTimes } from 'react-icons/fa';
+import { FaPlus, FaTimes } from 'react-icons/fa';
 
 const ProgressIndicator = () => {
   // Define the bus stops with title, time, and current stop status
