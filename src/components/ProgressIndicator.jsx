@@ -47,7 +47,7 @@ const ProgressIndicator = () => {
                   node.isPast
                     ? 'bg-white border-blue-600' // Current stop
                     : node.isCurrent
-                    ? 'bg-white border-blue-600 w-7 h-7 left-[-1.05rem]' // Past stop
+                    ? 'bg-white border-blue-600 w-7 h-7 left-[-1rem]' // Past stop
                     : 'bg-white border-gray-400' // Future stop
                 } border-2`}
               >
