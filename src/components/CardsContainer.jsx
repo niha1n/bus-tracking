@@ -1,72 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BusMap from './BusMap';
 import ProgressIndicator from './ProgressIndicator';
 import TopBar from './TopBar';
 import BusInfo from './BusInfo';
-
-const busData = [
-  {
-    busNumber: '101',
-    status: 'On Time',
-    statusColor: 'bg-green-200 text-green-800',
-    startPoint: 'Vyttila',
-    endPoint: 'Fort Kochi',
-    waypoints: [
-      { lat: 9.966254, lng: 76.297204, stop: 'Kadavanthra' },
-      { lat: 9.941162, lng: 76.281414, stop: 'Willingdon Island' },
-    ],
-    startTime: '08:00 AM',
-    endTime: '10:00 AM',
-    driverName: 'John Doe',
-    driverAvatar: 'https://via.placeholder.com/50',
-    driverContact: '+91 9876543210',
-  },
-  {
-    busNumber: '102',
-    status: 'Running Late',
-    statusColor: 'bg-yellow-200 text-yellow-800',
-    startPoint: 'Vyttila',
-    endPoint: 'Kakkanad',
-    waypoints: [
-      { lat: 9.989456, lng: 76.31558, stop: 'Chakkaraparamb' },
-      { lat: 10.011035, lng: 76.321451, stop: 'Chembumukk' },
-    ],
-    startTime: '09:00 AM',
-    endTime: '11:00 AM',
-    driverName: 'Jane Smith',
-    driverAvatar: 'https://via.placeholder.com/50',
-    driverContact: '+91 9876543211',
-  },
-  {
-    busNumber: '103',
-    status: 'Unavailable',
-    statusColor: 'bg-red-200 text-red-800',
-    startPoint: 'Vyttila',
-    endPoint: 'Edappally',
-    waypoints: [{ lat: 10.014306, lng: 76.311578, stop: 'Oberon Mall' }],
-    startTime: '07:00 AM',
-    endTime: '09:00 AM',
-    driverName: 'Alex Johnson',
-    driverAvatar: 'https://via.placeholder.com/50',
-    driverContact: '+91 9876543212',
-  },
-  {
-    busNumber: '104',
-    status: 'On Time',
-    statusColor: 'bg-green-200 text-green-800',
-    startPoint: 'Vyttila',
-    endPoint: 'Amrita Hospital, Kochi',
-    waypoints: [
-      { lat: 10.002224, lng: 76.313411, stop: 'Palariavattom' },
-      { lat: 9.989456, lng: 76.31558, stop: 'Chakkaraparamb' },
-    ],
-    startTime: '10:00 AM',
-    endTime: '12:00 PM',
-    driverName: 'Emily Davis',
-    driverAvatar: 'https://via.placeholder.com/50',
-    driverContact: '+91 9876543213',
-  },
-];
+import axios from 'axios';
 
 const BusCard = ({ bus, onClick, isSelected }) => {
   return (
@@ -123,7 +60,22 @@ const BusCard = ({ bus, onClick, isSelected }) => {
 };
 
 const BusSidebar = () => {
+  const [busData, setBusData] = useState([]);
   const [selectedRoute, setSelectedRoute] = useState(null);
+
+  useEffect(() => {
+    // Fetch bus data from the backend API
+    const fetchBusData = async () => {
+      try {
+        const response = await axios.get('https://bus-backend-wyb2.onrender.com/api/buses');
+        setBusData(response.data);
+      } catch (error) {
+        console.error('Error fetching bus data:', error);
+      }
+    };
+
+    fetchBusData();
+  }, []);
 
   const handleCardClick = (route) => {
     setSelectedRoute(route);
@@ -132,7 +84,7 @@ const BusSidebar = () => {
   return (
     <div className="flex flex-col w-[85%]">
       <TopBar />
-      <BusInfo/>
+      <BusInfo />
       <div className="flex  h-[90vh] items-center justify-center  w-full">
         {/* Sidebar */}
         <div className="flex flex-col h-full  pt-4 ">
@@ -153,8 +105,6 @@ const BusSidebar = () => {
         {/* Map Component */}
         <BusMap selectedRoute={selectedRoute} />
         <ProgressIndicator />
-
-
       </div>
     </div>
   );
